@@ -126,6 +126,7 @@ export default {
       this.editIndex = index;
       this.isEditMode = true;
       this.isModalOpen = true;
+      this.selectedTeams = [this.record.awayTeam, this.record.homeTeam]; // 기록할 때 선택했던 팀 보여주기
     },
     deleteRecord(index) {
       this.records.splice(index, 1);
@@ -294,7 +295,7 @@ export default {
           <v-list class="recordList">
             <v-list-item v-for="(rec, index) in records" :key="index" class="recordItem">
               <v-list-item-content @click="openViewModal(index)">
-                <v-list-item-title>{{ rec.date }}: {{ rec.homeTeam }} vs {{ rec.awayTeam }}</v-list-item-title>
+                <v-list-item-title>{{ rec.date }}: {{ rec.awayTeam }} vs {{ rec.homeTeam }}</v-list-item-title>
               </v-list-item-content>
               <v-list-item-action>
                 <v-btn size="small" icon @click="editRecord(index)">
@@ -315,11 +316,12 @@ export default {
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </v-card-title>
-              <v-card-text v-if="viewedRecord">
+              <v-card-text v-if="viewedRecord" class="viewRecord">
                 <p class="viewPitcher" v-if="awayPitcher && homePitcher">
                   <!-- 각 팀의 선발투수를 보여주는데, 사용자가 선발투수를 입력했을 때만 띄워줌 -->
                   {{ awayPitcher }} <b>vs</b> {{ homePitcher }}
                 </p>
+                <hr>
                 <!-- <p class="viewLineup">
                   <strong>{{ viewedRecord.awayTeam }} 라인업:</strong>
                   {{ viewedRecord.awayLineup.join(', ') }}
@@ -330,7 +332,8 @@ export default {
                 </p> -->
                 <p><strong>최종 스코어</strong></p>
                 <p>{{ finalScore }}</p>
-                <p><strong>경기 감상:</strong> {{ viewedRecord.comments }}</p>
+                <hr>
+                <p class="viewComments"><strong>경기 감상:</strong>{{ viewedRecord.comments }}</p>
               </v-card-text>
             </v-card>
           </v-dialog>
@@ -545,6 +548,19 @@ h3 {
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
+}
+
+.viewComments {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.viewRecord hr{
+  width: 50%;
+  opacity: 0.5;
+  margin: 10px 0;
 }
 </style>
 
