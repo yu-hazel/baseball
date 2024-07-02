@@ -4,6 +4,7 @@ import {fileURLToPath, URL} from 'url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/baseball/",
   plugins: [vue()],
   assetsInclude: ['**/*.JPG'],
   resolve: {

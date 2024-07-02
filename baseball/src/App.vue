@@ -343,7 +343,6 @@ export default {
   </v-app>
 </template>
 
-
 <style scoped>
 body {
   font-family: Arial, sans-serif;
